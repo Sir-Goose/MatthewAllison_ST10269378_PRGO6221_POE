@@ -1,4 +1,6 @@
-﻿namespace MatthewAllison_ST10269378_PRGO6221_POE
+﻿using MatthewAllison_ST10269378_PRGO6221_POE.Classes;
+
+namespace MatthewAllison_ST10269378_PRGO6221_POE
 {
     /// <summary>
     /// Matthew Allison

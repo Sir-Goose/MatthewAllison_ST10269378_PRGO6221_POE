@@ -11,7 +11,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
     internal class Program
     {
         /// <summary>
-        /// This is the main method. The starting point of the program. A UserInterface object is instationated and its
+        /// This is the main method. The starting point of the program. A UserInterface object is instantiated and its
         /// start method is called to begin the program.
         /// </summary>
         /// <param name="args"></param>

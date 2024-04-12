@@ -61,7 +61,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 }
             }
         }
-        //----------------------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the DeleteRecipe method.
         /// It works by overwriting the existing
@@ -73,7 +73,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine("Recipe Deleted Successfully");
             Console.WriteLine();
         }
-        //-------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ChangeRecipe method.
         /// It allows a user to change the scaling factor of the ingredients
@@ -124,7 +124,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             Console.WriteLine();
         }
-        //--------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ViewRecipe method. It prints out the current recipe in a
         /// neat and easy to read format.
@@ -158,7 +158,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.ReadKey();
             Console.WriteLine();
         }
-        //--------------------------------------------------------------------------------------------------------------//
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the CreateRecipe method. Largest in the class. It is
         /// every step required to capture the details of the recipe.
@@ -315,4 +315,4 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         }
     }
 }
-//-----------------------------------------------------------------------END-OF-FILE------------------------------------
+//----------------------------------------------END-OF-FILE-----------------------------------------------------------//

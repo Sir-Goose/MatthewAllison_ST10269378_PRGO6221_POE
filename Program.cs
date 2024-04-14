@@ -18,6 +18,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
     /// https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions
     /// https://github.com/ktaranov/naming-convention/blob/master/C%23%20Coding%20Standards%20and%20Naming%20Conventions.md#
     /// https://github.com/dev-marko/clean-code-book
+    /// https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/types/generics
+    ///https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/iteration-statements
     internal static class Program
     {
         /// <summary>

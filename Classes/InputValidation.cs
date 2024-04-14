@@ -2,17 +2,18 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
 {
     public class InputValidation
     {
-         /// <summary>
+        /// <summary>
         /// This is the option struct. It contains two values and is the type always returned from
         /// the input validation methods. It will sometimes have a string value to be used by
         /// the original calling method if the parsed input was valid.
         /// </summary>
         public struct Option
         {
-            public string value; // valid values
-            public bool? valid; // is valid yes no
+            public string Value; // valid values
+            public bool Valid; // is valid yes no
         }
-        //------------------------------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateMainMenu method.
         /// It makes sure something other than null has been provided.
@@ -24,16 +25,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Option option = new Option();
             if (input != null)
             {
-                option.value = input.Trim();
-                option.valid = true;
+                option.Value = input.Trim();
+                option.Valid = true;
             }
             else
             {
-                option.valid = false;
+                option.Valid = false;
             }
             return option;
         }
-        //----------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateChangeRecipeMenu method.
         /// It trims any leading and trailing whitespace
@@ -46,16 +48,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Option option = new Option();
             if (input != null)
             {
-                option.value = input.Trim();
-                option.valid = true;
+                option.Value = input.Trim();
+                option.Valid = true;
             }
             else
             {
-                option.valid = false;
+                option.Valid = false;
             }
             return option;
         }
-        //---------------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateScalingFactor method.
         /// It ensures that the provided input is not null.
@@ -73,18 +76,19 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 try
                 {
                     float.Parse(input);
-                    option.valid = true;
-                    option.value = input;
+                    option.Valid = true;
+                    option.Value = input;
                 }
                 catch
                 {
-                    option.valid = false;
+                    option.Valid = false;
                     return option;
                 }
             }
             return option;
         }
-        //-----------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateRecipeName method.
         /// It just checks that a null value was not provided 
@@ -92,22 +96,22 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// </summary>
         /// <param name="input"></param>
         /// <returns></returns>
-
         internal static Option ValidateRecipeName(string input)
         {
             Option option = new Option();
             if (input != null)
             {
-                option.value = input.Trim();
-                option.valid = true;
+                option.Value = input.Trim();
+                option.Valid = true;
             }
             else
             {
-                option.valid = false;
+                option.Valid = false;
             }
             return option;
         }
-        //-----------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateNumberIngredients method.
         /// It checks that the provided value is not null.
@@ -125,18 +129,19 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 try
                 {
                     int.Parse(input);
-                    option.valid = true;
-                    option.value = input;
+                    option.Valid = true;
+                    option.Value = input;
                 }
                 catch
                 {
-                    option.valid = false;
+                    option.Valid = false;
                     return option;
                 }
             }
             return option;
         }
-        //----------------------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateIngredientName method.
         /// It checks for null values.
@@ -149,16 +154,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Option option = new Option();
             if (input != null)
             {
-                option.value = input.Trim();
-                option.valid = true; 
+                option.Value = input.Trim();
+                option.Valid = true;
             }
             else
             {
-                option.valid = false;
+                option.Valid = false;
             }
             return option;
         }
-        //-----------------------------------------------------------------//
+
+        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ValidateQuantity method.
         /// It checks for null values.
@@ -176,19 +182,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 try
                 {
                     int.Parse(input);
-                    option.valid = true;
-                    option.value = input;
+                    option.Valid = true;
+                    option.Value = input;
                 }
                 catch
                 {
-                    option.valid = false;
+                    option.Valid = false;
                     return option;
                 }
             }
             return option;
-
         }
     }
-//--------------------------------------------------------------------END-OF-FILE---------------------------------------------------------------//
-
 }
+//-------------------------------------------------------END-OF-FILE--------------------------------------------------//

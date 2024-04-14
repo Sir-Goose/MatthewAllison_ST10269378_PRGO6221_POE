@@ -22,17 +22,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         public static Option ValidateMainMenu(string input)
         {
-            var option = new Option();
-            if (input != null)
-            {
-                option.Value = input.Trim();
-                option.Valid = true;
-            }
-            else
-            {
-                option.Valid = false;
-            }
-            return option;
+            return ValidateInput(input);
         }
 
         //------------------------------------------------------------------------------------------------------------//
@@ -45,17 +35,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         public static Option ValidateChangeRecipeMenu(string input)
         {
-            var option = new Option();
-            if (input != null)
-            {
-                option.Value = input.Trim();
-                option.Valid = true;
-            }
-            else
-            {
-                option.Valid = false;
-            }
-            return option;
+            return ValidateInput(input);
         }
 
         //------------------------------------------------------------------------------------------------------------//
@@ -96,17 +76,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateRecipeName(string input)
         {
-            var option = new Option();
-            if (input != null)
-            {
-                option.Value = input.Trim();
-                option.Valid = true;
-            }
-            else
-            {
-                option.Valid = false;
-            }
-            return option;
+            return ValidateInput(input);
         }
 
         //------------------------------------------------------------------------------------------------------------//
@@ -147,17 +117,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateIngredientName(string input)
         {
-            var option = new Option();
-            if (input != null)
-            {
-                option.Value = input.Trim();
-                option.Valid = true;
-            }
-            else
-            {
-                option.Valid = false;
-            }
-            return option;
+            return ValidateInput(input);
         }
 
         //------------------------------------------------------------------------------------------------------------//
@@ -187,6 +147,26 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             return option;
         }
+        /// <summary>
+        /// Validates the input by ensuring it is not null and trimming any leading and trailing whitespace.
+        /// </summary>
+        /// <param name="input">The input to validate.</param>
+        /// <returns>An Option struct containing the validation result.</returns>
+        private static Option ValidateInput(string input)
+        {
+            var option = new Option();
+            if (input != null)
+            {
+                option.Value = input.Trim();
+                option.Valid = true;
+            }
+            else
+            {
+                option.Valid = false;
+            }
+            return option;
+        }
     }
+    
 }
 //-------------------------------------------------------END-OF-FILE--------------------------------------------------//

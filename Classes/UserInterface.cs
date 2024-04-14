@@ -91,7 +91,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine($"Current scaling factor is: {_recipe.Scaling_factor()}");
             Console.WriteLine();
             Console.WriteLine("1. Adjust scale");
-            Console.WriteLine("2. Reset scael");
+            Console.WriteLine("2. Reset scale");
             Console.WriteLine("Enter choice: ");
             var option = InputValidation.ValidateChangeRecipeMenu(Console.ReadLine());
             if (option.Value == null)
@@ -135,23 +135,23 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         private void ViewRecipe()
         {
             Console.WriteLine($"RECIPE: {_recipe.Name()}");
-            Console.WriteLine($"Number of ingredients: {_recipe.ingredients.Length}");
-            Console.WriteLine($"Number of steps: {_recipe.steps.Length}");
+            Console.WriteLine($"Number of ingredients: {_recipe.Ingredients.Length}");
+            Console.WriteLine($"Number of steps: {_recipe.Steps.Length}");
             Console.WriteLine();
             Console.WriteLine("LIST OF INGREDIENTS: ");
 
-            for ( var i = 0; i < _recipe.ingredients.Length; i++ )
+            for ( var i = 0; i < _recipe.Ingredients.Length; i++ )
             {
                 Console.Write($"{i + 1}. ");
-                Console.WriteLine(_recipe.ingredients[i].ToString(_recipe.Scaling_factor()));
+                Console.WriteLine(_recipe.Ingredients[i].ToString(_recipe.Scaling_factor()));
             }
             Console.WriteLine();
 
             Console.WriteLine("LIST OF STEPS: ");
-            for ( var i = 0; i < _recipe.steps.Length; i++ )
+            for ( var i = 0; i < _recipe.Steps.Length; i++ )
             {
                 Console.Write($"{i + 1}. ");
-                Console.WriteLine(_recipe.steps[i].Description());
+                Console.WriteLine(_recipe.Steps[i].Description());
             }
             
             Console.WriteLine();
@@ -202,7 +202,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             _recipe.MakeIngriedientsArray(numIngredients);
             Console.WriteLine();
             // collect ingredient names
-            for (var i = 0; i < _recipe.ingredients.Length; i++)
+            for (var i = 0; i < _recipe.Ingredients.Length; i++)
             {
                 Console.WriteLine($"Ingredient {i + 1}:");
                 while (true)
@@ -214,7 +214,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     {
                         continue ;
                     }
-                    _recipe.ingredients[i].Name = option1.Value;
+                    _recipe.Ingredients[i].Name = option1.Value;
                     Console.WriteLine();
                     break;
                 }
@@ -249,7 +249,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         )
                     )
                     {
-                        _recipe.ingredients[i].Unit = unit;
+                        _recipe.Ingredients[i].Unit = unit;
                         break;
                     }
                     else
@@ -270,7 +270,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         continue;
 
                     }
-                    _recipe.ingredients[i].Quantity = int.Parse(option1.Value);
+                    _recipe.Ingredients[i].Quantity = int.Parse(option1.Value);
                     break;
                 }
                 Console.WriteLine();
@@ -309,7 +309,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         continue;
                     }
                     Console.WriteLine();
-                    _recipe.steps[i] = step;
+                    _recipe.Steps[i] = step;
                     break;
                 }
             }

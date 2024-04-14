@@ -35,29 +35,38 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 choice = option.Value;
                 Console.WriteLine();
 
-                switch (choice)
-                {
-                    case "1":
-                        CreateRecipe();
-                        break;
-                    case "2":
-                        ViewRecipe();
-                        break;
-                    case "3":
-                        ChangeRecipe();
-                        break;
-                    case "4":
-                        DeleteRecipe();
-                        break;
-                    case "5":
-                        Environment.Exit(0);
-                        break;
-                    default:
-                        Console.WriteLine("Invalid Option.");
-                        break;
-                }
+                ProcessChoice(choice);
             }
         }
+        /// <summary>
+        /// Switch case to choose what to do with user input
+        /// </summary>
+        /// <param name="choice"></param>
+        private void ProcessChoice(string choice)
+        {
+            switch (choice)
+            {
+                case "1":
+                    CreateRecipe();
+                    break;
+                case "2":
+                    ViewRecipe();
+                    break;
+                case "3":
+                    ChangeRecipe();
+                    break;
+                case "4":
+                    DeleteRecipe();
+                    break;
+                case "5":
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid Option.");
+                    break;
+            }
+        }
+
         /// <summary>
         /// Simple method to print out the menu.
         /// </summary>
@@ -100,9 +109,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine("");
             Console.WriteLine($"Current scaling factor is: {_recipe.Scaling_factor()}");
             Console.WriteLine();
-            Console.WriteLine("1. Adjust scale");
-            Console.WriteLine("2. Reset scale");
-            Console.WriteLine("Enter choice: ");
+            PrintChangeRecipeMenu();
+            
             var option = InputValidation.ValidateChangeRecipeMenu(Console.ReadLine());
             if (option.Value == null)
             {
@@ -113,6 +121,12 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             var choice = option.Value;
             
             Console.WriteLine();
+            ProcessRecipeChoice(choice);
+            Console.WriteLine();
+        }
+
+        private void ProcessRecipeChoice(string choice)
+        {
             switch (choice)
             {
                 case "1":
@@ -135,8 +149,15 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     _recipe.Scaling_factor(1);
                     break;
             }
-            Console.WriteLine();
         }
+
+        private void PrintChangeRecipeMenu()
+        {
+            Console.WriteLine("1. Adjust scale");
+            Console.WriteLine("2. Reset scale");
+            Console.WriteLine("Enter choice: ");
+        }
+
         //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the ViewRecipe method. It prints out the current recipe in a

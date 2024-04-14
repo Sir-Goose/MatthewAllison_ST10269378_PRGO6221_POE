@@ -17,23 +17,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         {
             MainMenu();
         }
-
+        /// <summary>
+        /// This is the main menu of the program. It handles the user choosing what they would like to do.
+        /// </summary>
         private void MainMenu()
         {
             while (true)
             {
                 var choice = "0";
                 
-                Console.WriteLine("RECIPE PROCESSING SOFTWARE");
-                Console.WriteLine();
-                Console.WriteLine("1. Create New Recipe");
-                Console.WriteLine("2. View Existing Recipe");
-                Console.WriteLine("3. Change Current Recipe");
-                Console.WriteLine("4. Delete Existing Recipe");
-                Console.WriteLine("5. Exit");
-                Console.WriteLine("");
-                Console.WriteLine("Enter choice: ");
-                
+                PrintMainMenu(); // display the menu options
+
                 var option = InputValidation.ValidateMainMenu(Console.ReadLine());
                 if (option.Value == null) {
                     continue;
@@ -64,6 +58,22 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 }
             }
         }
+        /// <summary>
+        /// Simple method to print out the menu.
+        /// </summary>
+        private void PrintMainMenu()
+        {
+            Console.WriteLine("RECIPE PROCESSING SOFTWARE");
+            Console.WriteLine();
+            Console.WriteLine("1. Create New Recipe");
+            Console.WriteLine("2. View Existing Recipe");
+            Console.WriteLine("3. Change Current Recipe");
+            Console.WriteLine("4. Delete Existing Recipe");
+            Console.WriteLine("5. Exit");
+            Console.WriteLine("");
+            Console.WriteLine("Enter choice: ");
+        }
+
         //------------------------------------------------------------------------------------------------------------//
         /// <summary>
         /// This is the DeleteRecipe method.

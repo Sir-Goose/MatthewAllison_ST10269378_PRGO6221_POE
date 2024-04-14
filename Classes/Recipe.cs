@@ -8,6 +8,32 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
     /// </summary>
     public class Recipe
     {
+        public Step[] Steps; // step array
+        public Ingredient[] Ingredients; // ingredient array
+        
+        private string _name = ""; //recipe name
+        private int _numSteps = 0; // step count
+                
+        private float _scalingFactor = 1; // current scaling factor
+        
+        public void Name(string name)
+        {
+            this._name = name;
+        }
+        
+        public string Name()
+        {
+            return _name;
+        }
+        
+        public void Scaling_factor(float scalingFactor)
+        {
+            this._scalingFactor = scalingFactor;
+        } 
+        public float Scaling_factor()
+        {
+            return this._scalingFactor;
+        }
     /// <summary>
         /// Ingredient struct.
         /// Contains three variables
@@ -97,8 +123,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
         }
         //------------------------------------------------------------------------------------------------------------//
-        public Step[] Steps; // step array
-        public Ingredient[] Ingredients; // ingredient array
+        
 
         /// <summary>
         /// Helper method to make the ingredients array. Takes in a size parameter.
@@ -119,28 +144,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             this.Steps = steps;
         }
         //------------------------------------------------------------------------------------------------------------//
-        private string _name = ""; //recipe name
-        private int _numSteps = 0; // step count
-        private float _scalingFactor = 1; // current scaling factor
-
-        public void Name(string name)
-        {
-            this._name = name;
-        }
-
-        public string Name()
-        {
-            return _name;
-        }
-
-        public void Scaling_factor(float scalingFactor)
-        {
-            this._scalingFactor = scalingFactor;
-        }
-        public float Scaling_factor()
-        {
-            return this._scalingFactor;
-        }
+        
     }
 }
 //----------------------------------------------END-OF-FILE-----------------------------------------------------------//

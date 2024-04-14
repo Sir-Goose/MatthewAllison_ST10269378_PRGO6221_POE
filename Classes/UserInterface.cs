@@ -293,7 +293,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             Console.WriteLine();
 
-            for (int i = 0; i < numSteps; i++)
+            for (var i = 0; i < numSteps; i++)
             {
                 while (true)
                 {

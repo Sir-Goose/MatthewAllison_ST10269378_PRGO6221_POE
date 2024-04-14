@@ -8,7 +8,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
     /// PROG6221
     /// POE
     /// </summary>
-    internal class Program
+    internal static class Program
     {
         /// <summary>
         /// This is the main method. The starting point of the program. A UserInterface object is instantiated and its
@@ -17,10 +17,9 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
         /// <param name="args"></param>
         public static void Main(string[] args)
         {
-            UserInterface userInterface = new UserInterface();
+            var userInterface = new UserInterface();
             userInterface.Start();
         }
     }
-
 }
 //------------------------------------------------------END-OF-FILE---------------------------------------------------//

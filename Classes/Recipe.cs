@@ -17,43 +17,30 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// </summary>
         public struct Ingredient
         {
-            private string name; 
-            private int quantity;
-            private CookingMeasurement unit;
+            public string Name { get; set; }
 
-            public string Name
-            {
-                get => name;
-                set => name = value;
-            }
-            public int Quantity
-            {
-                get => quantity;
-                set => quantity = value;
-            }
-            public CookingMeasurement Unit
-            {
-                get => unit;
-                set => unit = value;
-            }
+            public int Quantity { get; set; }
 
-            public void multiplyQuantity(int factor)
+            public CookingMeasurement Unit { get; set; }
+
+            public void MultiplyQuantity(int factor)
             {
-                quantity *= factor;
+                Quantity *= factor;
             }
             /// <summary>
             /// Method to format the ingredient information for printing to console.
             /// </summary>
-            /// <param name="scaling_factor"></param>
+            /// <param name="scalingFactor"></param>
             /// <returns></returns>
-            new public string ToString(float scaling_factor)
+            public string ToString(float scalingFactor)
             {
-                string output = "";
-                output += quantity * scaling_factor;
-                output += " of ";
-                output += unit;
+                var output = "";
+                output += Quantity * scalingFactor;
                 output += " ";
-                output += name;
+                output += Unit;
+                output += "of ";
+                output += " ";
+                output += Name;
                 output += ".";
 
                 return output;
@@ -88,30 +75,30 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// </summary>
         public struct Step
         {
-            private int position; // position of each step in the array
-            private string description; // what to do for each step
+            private int _position; // position of each step in the array
+            private string _description; // what to do for each step
 
             public void Position(int pos)
             {
-                this.position = pos;
+                this._position = pos;
             }
             public int Position()
             {
-                return this.position;
+                return this._position;
             }
 
             public void Description(string description)
             {
-                this.description = description;
+                this._description = description;
             }
             public string Description()
             {
-                return description;
+                return _description;
             }
         }
         //------------------------------------------------------------------------------------------------------------//
-        public Step[] steps; // step array
-        public Ingredient[] ingredients; // ingredient array
+        public Step[] Steps; // step array
+        public Ingredient[] Ingredients; // ingredient array
 
         /// <summary>
         /// Helper method to make the ingredients array. Takes in a size parameter.
@@ -119,8 +106,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <param name="num"></param>
         public void MakeIngriedientsArray(int num)
         {
-            Ingredient[] ingredients = new Ingredient[num];
-            this.ingredients = ingredients;
+            var ingredients = new Ingredient[num];
+            this.Ingredients = ingredients;
         }
         /// <summary>
         /// Helper method to make the steps array. Takes in a size parameter.
@@ -128,41 +115,32 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <param name="num"></param>
         public void MakeStepsArray(int num)
         {
-            Step[] steps = new Step[num];
-            this.steps = steps;
+            var steps = new Step[num];
+            this.Steps = steps;
         }
         //------------------------------------------------------------------------------------------------------------//
-        private string name = ""; //recipe name
-        private int num_steps = 0; // step count
-        private float scaling_factor = 1; // current scaling factor
+        private string _name = ""; //recipe name
+        private int _numSteps = 0; // step count
+        private float _scalingFactor = 1; // current scaling factor
 
         public void Name(string name)
         {
-            this.name = name;
+            this._name = name;
         }
 
         public string Name()
         {
-            return name;
+            return _name;
         }
 
-        public void Num_steps(int num)
+        public void Scaling_factor(float scalingFactor)
         {
-            this.num_steps = num;
-        }
-
-        public int Num_steps()
-        {
-            return this.num_steps;
-        }
-        public void Scaling_factor(float scaling_factor)
-        {
-            this.scaling_factor = scaling_factor;
+            this._scalingFactor = scalingFactor;
         }
         public float Scaling_factor()
         {
-            return this.scaling_factor;
+            return this._scalingFactor;
         }
     }
 }
-//----------------------------------------------------------END-OF-FILE-----------------------------------------------//
+//----------------------------------------------END-OF-FILE-----------------------------------------------------------//

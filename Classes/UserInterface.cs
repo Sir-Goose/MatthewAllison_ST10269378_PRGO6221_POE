@@ -194,7 +194,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         }
         //------------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// This is the CreateRecipe method. Largest in the class. It is
+        /// This is the CreateRecipe and associated set of method. Largest in the class. It is
         /// every step required to capture the details of the recipe.
         /// There is robust input validation and value checking to 
         /// prevent a user from having to start from scratch if they 
@@ -214,119 +214,165 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             Console.WriteLine();
             
+            int numIngredients = GetNumberOfIngredients();
+            _recipe.MakeIngriedientsArray(numIngredients);
+            Console.WriteLine();
+
+            CaptureIngredients();
+
+            Console.WriteLine("Thank you, all ingredients captured");
+            Console.WriteLine();
+
+            int numSteps = GetNumberOfSteps();
+            Console.WriteLine();
             
-            int numIngredients;
+            CaptureSteps(numSteps);
+
+            Console.WriteLine("Thank you. Recipe has been captured");
+            Console.WriteLine();
+        }
+        /// <summary>
+        /// Fetch a validate the ingredient count from the user.
+        /// </summary>
+        /// <returns></returns>
+        private int GetNumberOfIngredients()
+        {
             while (true)
             {
                 Console.WriteLine("Enter number of ingredients: ");
-                var option1 = InputValidation.ValidateNumberIngredients(Console.ReadLine());
-                if (option1.Value == null)
+                var option = InputValidation.ValidateNumberIngredients(Console.ReadLine());
+                if (option.Value == null)
                 {
                     continue;
                 }
                 else
                 {
-                    numIngredients = int.Parse(option1.Value);
-                    break;
+                    return int.Parse(option.Value);
                 }
             }
-            _recipe.MakeIngriedientsArray(numIngredients);
-            Console.WriteLine();
-            // collect ingredient names
+        }
+        /// <summary>
+        /// Fetch the actual ingrdients from the user
+        /// </summary>
+        private void CaptureIngredients()
+        {
             for (var i = 0; i < _recipe.Ingredients.Length; i++)
             {
                 Console.WriteLine($"Ingredient {i + 1}:");
-                while (true)
-                {
-                    
-                    Console.WriteLine("Enter ingriedient name: ");
-                    var option1 = InputValidation.ValidateIngredientName(Console.ReadLine());
-                    if (option1.Value == null)
-                    {
-                        continue ;
-                    }
-                    _recipe.Ingredients[i].Name = option1.Value;
-                    Console.WriteLine();
-                    break;
-                }
-
-                Console.WriteLine("MEASUREMENT UNITS: ");
-                Console.WriteLine("-------------------");
-                // print out the various measurement options available
-                foreach (
-                    Recipe.CookingMeasurement measurement in Enum.GetValues(
-                        typeof(Recipe.CookingMeasurement)
-                    )
-                )
-                {
-                    Console.WriteLine(measurement);
-                }
-                Console.WriteLine("-------------------");
-                while (true)
-                {
-
-                    Console.WriteLine("Enter one of the above: ");
-                    var input = Console.ReadLine();
-                    if ( input == null)
-                    {
-                        continue;
-                    }
-
-                    if (
-                        Enum.TryParse<Recipe.CookingMeasurement>( // enusre inputted inut is valid
-                            input,
-                            true,
-                            out var unit
-                        )
-                    )
-                    {
-                        _recipe.Ingredients[i].Unit = unit;
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Please choose a valid option");
-                        continue;
-                    }
-                }
+                CaptureIngredientName(i);
                 Console.WriteLine();
-                // infinite loop that exists when the user enters a valid number
-                while (true)
-                {
-                    Console.WriteLine("Enter quantity: ");
-                    var option1 = InputValidation.ValidateQuantity(Console.ReadLine());
-                    if (option1.Value == null)
-                    {
-                        Console.WriteLine("Please use arabic numerals only.");
-                        continue;
 
-                    }
-                    _recipe.Ingredients[i].Quantity = int.Parse(option1.Value);
-                    break;
-                }
+                DisplayMeasurementUnits();
+                CaptureIngredientUnit(i);
+                Console.WriteLine();
+
+                CaptureIngredientQuantity(i);
                 Console.WriteLine();
             }
-            Console.WriteLine("Thank you, all ingredients captured");
-            Console.WriteLine();
-
-            int numSteps;
+        }
+        /// <summary>
+        /// Fetch the ingredient names
+        /// </summary>
+        /// <param name="index"></param>
+        private void CaptureIngredientName(int index)
+        {
             while (true)
             {
-                Console.WriteLine("Enter number of steps: ");
-                var option1 = InputValidation.ValidateQuantity(Console.ReadLine());
-                if (option1.Value == null)
+                Console.WriteLine("Enter ingredient name: ");
+                var option = InputValidation.ValidateIngredientName(Console.ReadLine());
+                if (option.Value == null)
+                {
+                    continue;
+                }
+                _recipe.Ingredients[index].Name = option.Value;
+                break;
+            }
+        }
+        /// <summary>
+        /// Display the list of measurement units
+        /// </summary>
+        private void DisplayMeasurementUnits()
+        {
+            Console.WriteLine("MEASUREMENT UNITS: ");
+            Console.WriteLine("-------------------");
+            foreach (Recipe.CookingMeasurement measurement in Enum.GetValues(typeof(Recipe.CookingMeasurement)))
+            {
+                Console.WriteLine(measurement);
+            }
+            Console.WriteLine("-------------------");
+        }
+        /// <summary>
+        /// Get the unit chosen by the user and validate it
+        /// </summary>
+        /// <param name="index"></param>
+        private void CaptureIngredientUnit(int index)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter one of the above: ");
+                var input = Console.ReadLine();
+                if (input == null)
+                {
+                    continue;
+                }
+
+                if (Enum.TryParse<Recipe.CookingMeasurement>(input, true, out var unit))
+                {
+                    _recipe.Ingredients[index].Unit = unit;
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Please choose a valid option");
+                    continue;
+                }
+            }
+        }
+        /// <summary>
+        /// Get the quanity of each ingredient
+        /// </summary>
+        /// <param name="index"></param>
+        private void CaptureIngredientQuantity(int index)
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter quantity: ");
+                var option = InputValidation.ValidateQuantity(Console.ReadLine());
+                if (option.Value == null)
                 {
                     Console.WriteLine("Please use arabic numerals only.");
                     continue;
                 }
-                numSteps = int.Parse(option1.Value);
-                _recipe.MakeStepsArray(numSteps);
+                _recipe.Ingredients[index].Quantity = int.Parse(option.Value);
                 break;
             }
-            Console.WriteLine();
-            
-            // Collect the various steps from the users. Loop that runs according to how many steps were entered in 
-            // earlier
+        }
+        /// <summary>
+        /// Get the number of steps from the user
+        /// </summary>
+        /// <returns></returns>
+        private int GetNumberOfSteps()
+        {
+            while (true)
+            {
+                Console.WriteLine("Enter number of steps: ");
+                var option = InputValidation.ValidateQuantity(Console.ReadLine());
+                if (option.Value == null)
+                {
+                    Console.WriteLine("Please use arabic numerals only.");
+                    continue;
+                }
+                int numSteps = int.Parse(option.Value);
+                _recipe.MakeStepsArray(numSteps);
+                return numSteps;
+            }
+        }
+        /// <summary>
+        /// Get the details of each step and make sure details are actually provided
+        /// </summary>
+        /// <param name="numSteps"></param>
+        private void CaptureSteps(int numSteps)
+        {
             for (var i = 0; i < numSteps; i++)
             {
                 while (true)
@@ -344,8 +390,6 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     break;
                 }
             }
-            Console.WriteLine("Thank you. Recipe has been captured");
-            Console.WriteLine();
         }
     }
 }

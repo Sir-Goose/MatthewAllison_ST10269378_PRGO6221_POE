@@ -11,18 +11,18 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
     /// </summary>
     internal class UserInterface
     {
-        private Recipe recipe = new Recipe();
+        private Recipe _recipe = new Recipe();
 
         public void Start()
         {
             MainMenu();
         }
 
-        public void MainMenu()
+        private void MainMenu()
         {
             while (true)
             {
-                string choice = "0";
+                var choice = "0";
                 
                 Console.WriteLine("RECIPE PROCESSING SOFTWARE");
                 Console.WriteLine();
@@ -34,7 +34,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 Console.WriteLine("");
                 Console.WriteLine("Enter choice: ");
                 
-                InputValidation.Option option = InputValidation.ValidateMainMenu(Console.ReadLine());
+                var option = InputValidation.ValidateMainMenu(Console.ReadLine());
                 if (option.Value == null) {
                     continue;
                 }
@@ -69,7 +69,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// </summary>
         private void DeleteRecipe()
         {
-            recipe = new Recipe();
+            _recipe = new Recipe();
             Console.WriteLine("Recipe Deleted Successfully");
             Console.WriteLine();
         }
@@ -85,7 +85,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         {
             Console.WriteLine("Adjusting Recipe Scale");
             Console.WriteLine("");
-            Console.WriteLine($"Current scaling factor is: {recipe.Scaling_factor()}");
+            Console.WriteLine($"Current scaling factor is: {_recipe.Scaling_factor()}");
             Console.WriteLine();
             Console.WriteLine("1. Adjust scale");
             Console.WriteLine("2. Reset scael");
@@ -97,7 +97,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 Console.WriteLine();
                 ChangeRecipe();
             }
-            string choice = option.Value;
+            var choice = option.Value;
             
             Console.WriteLine();
             switch (choice)
@@ -109,17 +109,17 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     {
                         Console.WriteLine("Please enter an arabic numeral");
                         Console.WriteLine("Scaling factor reset to: 1.");
-                        recipe.Scaling_factor(1);
+                        _recipe.Scaling_factor(1);
                     }
                     else
                     {
-                    recipe.Scaling_factor(float.Parse(option1.Value));
-                    Console.WriteLine($"Scaling factor adjusted to: {recipe.Scaling_factor()}");
+                        _recipe.Scaling_factor(float.Parse(option1.Value));
+                        Console.WriteLine($"Scaling factor adjusted to: {_recipe.Scaling_factor()}");
                     }
                     break;
                 case "2":
                     Console.WriteLine("Scaling factor reset to: 1");
-                    recipe.Scaling_factor(1);
+                    _recipe.Scaling_factor(1);
                     break;
             }
             Console.WriteLine();
@@ -131,24 +131,24 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// </summary>
         private void ViewRecipe()
         {
-            Console.WriteLine($"RECIPE: {recipe.Name()}");
-            Console.WriteLine($"Number of ingredients: {recipe.ingredients.Length}");
-            Console.WriteLine($"Number of steps: {recipe.steps.Length}");
+            Console.WriteLine($"RECIPE: {_recipe.Name()}");
+            Console.WriteLine($"Number of ingredients: {_recipe.ingredients.Length}");
+            Console.WriteLine($"Number of steps: {_recipe.steps.Length}");
             Console.WriteLine();
             Console.WriteLine("LIST OF INGREDIENTS: ");
 
-            for ( int i = 0; i < recipe.ingredients.Length; i++ )
+            for ( var i = 0; i < _recipe.ingredients.Length; i++ )
             {
                 Console.Write($"{i + 1}. ");
-                Console.WriteLine(recipe.ingredients[i].ToString(recipe.Scaling_factor()));
+                Console.WriteLine(_recipe.ingredients[i].ToString(_recipe.Scaling_factor()));
             }
             Console.WriteLine();
 
             Console.WriteLine("LIST OF STEPS: ");
-            for ( int i = 0; i < recipe.steps.Length; i++ )
+            for ( int i = 0; i < _recipe.steps.Length; i++ )
             {
                 Console.Write($"{i + 1}. ");
-                Console.WriteLine(recipe.steps[i].Description());
+                Console.WriteLine(_recipe.steps[i].Description());
             }
             
             Console.WriteLine();
@@ -176,43 +176,43 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             else
             {
-                recipe.Name(option.Value);
+                _recipe.Name(option.Value);
             }
             Console.WriteLine();
 
 
             
-            int num_ingredients;
+            int numIngredients;
             while (true)
             {
                 Console.WriteLine("Enter number of ingredients: ");
-                InputValidation.Option option1 = InputValidation.ValidateNumberIngredients(Console.ReadLine());
+                var option1 = InputValidation.ValidateNumberIngredients(Console.ReadLine());
                 if (option1.Value == null)
                 {
                     continue;
                 }
                 else
                 {
-                    num_ingredients = int.Parse(option1.Value);
+                    numIngredients = int.Parse(option1.Value);
                     break;
                 }
             }
-            recipe.MakeIngriedientsArray(num_ingredients);
+            _recipe.MakeIngriedientsArray(numIngredients);
             Console.WriteLine();
 
-            for (int i = 0; i < recipe.ingredients.Length; i++)
+            for (var i = 0; i < _recipe.ingredients.Length; i++)
             {
                 Console.WriteLine($"Ingredient {i + 1}:");
                 while (true)
                 {
                     
                     Console.WriteLine("Enter ingriedient name: ");
-                    InputValidation.Option option1 = InputValidation.ValidateIngredientName(Console.ReadLine());
+                    var option1 = InputValidation.ValidateIngredientName(Console.ReadLine());
                     if (option1.Value == null)
                     {
                         continue ;
                     }
-                    recipe.ingredients[i].Name = option1.Value;
+                    _recipe.ingredients[i].Name = option1.Value;
                     Console.WriteLine();
                     break;
                 }
@@ -243,11 +243,11 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         Enum.TryParse<Recipe.CookingMeasurement>( // enusre inputted inut is valid
                             input,
                             true,
-                            out Recipe.CookingMeasurement unit
+                            out var unit
                         )
                     )
                     {
-                        recipe.ingredients[i].Unit = unit;
+                        _recipe.ingredients[i].Unit = unit;
                         break;
                     }
                     else
@@ -261,14 +261,14 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 while (true)
                 {
                     Console.WriteLine("Enter quantity: ");
-                    InputValidation.Option option1 = InputValidation.ValidateQuantity(Console.ReadLine());
+                    var option1 = InputValidation.ValidateQuantity(Console.ReadLine());
                     if (option1.Value == null)
                     {
                         Console.WriteLine("Please use arabic numerals only.");
                         continue;
 
                     }
-                    recipe.ingredients[i].Quantity = int.Parse(option1.Value);
+                    _recipe.ingredients[i].Quantity = int.Parse(option1.Value);
                     break;
                 }
                 Console.WriteLine();
@@ -276,7 +276,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine("Thank you, all ingredients captured");
             Console.WriteLine();
 
-            int num_steps;
+            int numSteps;
             while (true)
             {
 
@@ -287,18 +287,18 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     Console.WriteLine("Please use arabic numerals only.");
                     continue;
                 }
-                num_steps = int.Parse(option1.Value);
-                recipe.MakeStepsArray(num_steps);
+                numSteps = int.Parse(option1.Value);
+                _recipe.MakeStepsArray(numSteps);
                 break;
             }
             Console.WriteLine();
 
-            for (int i = 0; i < num_steps; i++)
+            for (int i = 0; i < numSteps; i++)
             {
                 while (true)
                 {
                     Console.WriteLine($"Please enter step {i + 1}");
-                    Recipe.Step step = new Recipe.Step();
+                    var step = new Recipe.Step();
                     step.Position(i);
                     step.Description(Console.ReadLine());
                     if (step.Description() == null)
@@ -306,7 +306,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         continue;
                     }
                     Console.WriteLine();
-                    recipe.steps[i] = step;
+                    _recipe.steps[i] = step;
                     break;
                 }
             }

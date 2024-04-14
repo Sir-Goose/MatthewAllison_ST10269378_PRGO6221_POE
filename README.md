@@ -1,4 +1,4 @@
-## Matthew Allison ST10269378 PROG6221 POE
+# Matthew Allison ST10269378 PROG6221 POE
 
 ### Sample of Commits:
 <img width="1328" alt="Screenshot 2024-04-14 at 16 18 22" src="https://github.com/Sir-Goose/MatthewAllison_ST10269378_PRGO6221_POE/assets/66563291/4c6a9d47-16b8-456d-bb72-9d16c4bc78c0">

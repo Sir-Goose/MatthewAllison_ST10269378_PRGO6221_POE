@@ -55,8 +55,11 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     case "4":
                         DeleteRecipe();
                         break;
-                    default:
+                    case "5":
                         Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid Option.");
                         break;
                 }
             }
@@ -90,7 +93,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine("1. Adjust scale");
             Console.WriteLine("2. Reset scael");
             Console.WriteLine("Enter choice: ");
-            InputValidation.Option option = InputValidation.ValidateChangeRecipeMenu(Console.ReadLine());
+            var option = InputValidation.ValidateChangeRecipeMenu(Console.ReadLine());
             if (option.Value == null)
             {
                 Console.WriteLine("Pleas enter either 1 or 2.");
@@ -104,7 +107,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             {
                 case "1":
                     Console.WriteLine("Enter new scaling factor in arabic numerals: ");
-                    InputValidation.Option option1 = InputValidation.ValidateScalingFactor(Console.ReadLine());
+                    var option1 = InputValidation.ValidateScalingFactor(Console.ReadLine());
                     if (option1.Value == null)
                     {
                         Console.WriteLine("Please enter an arabic numeral");
@@ -145,7 +148,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Console.WriteLine();
 
             Console.WriteLine("LIST OF STEPS: ");
-            for ( int i = 0; i < _recipe.steps.Length; i++ )
+            for ( var i = 0; i < _recipe.steps.Length; i++ )
             {
                 Console.Write($"{i + 1}. ");
                 Console.WriteLine(_recipe.steps[i].Description());
@@ -169,7 +172,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         private void CreateRecipe()
         {
             Console.WriteLine("Enter recipe name: ");
-            InputValidation.Option option = InputValidation.ValidateRecipeName(Console.ReadLine());
+            var option = InputValidation.ValidateRecipeName(Console.ReadLine());
             if (option.Value == null)
             {
                 CreateRecipe();
@@ -179,8 +182,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 _recipe.Name(option.Value);
             }
             Console.WriteLine();
-
-
+            
             
             int numIngredients;
             while (true)
@@ -199,7 +201,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             }
             _recipe.MakeIngriedientsArray(numIngredients);
             Console.WriteLine();
-
+            // collect ingredient names
             for (var i = 0; i < _recipe.ingredients.Length; i++)
             {
                 Console.WriteLine($"Ingredient {i + 1}:");
@@ -219,7 +221,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
 
                 Console.WriteLine("MEASUREMENT UNITS: ");
                 Console.WriteLine("-------------------");
-
+                // print out the various measurement options available
                 foreach (
                     Recipe.CookingMeasurement measurement in Enum.GetValues(
                         typeof(Recipe.CookingMeasurement)
@@ -233,7 +235,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 {
 
                     Console.WriteLine("Enter one of the above: ");
-                    string input = Console.ReadLine();
+                    var input = Console.ReadLine();
                     if ( input == null)
                     {
                         continue;
@@ -257,7 +259,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                     }
                 }
                 Console.WriteLine();
-
+                // infinite loop that exists when the user enters a valid number
                 while (true)
                 {
                     Console.WriteLine("Enter quantity: ");
@@ -279,9 +281,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             int numSteps;
             while (true)
             {
-
                 Console.WriteLine("Enter number of steps: ");
-                InputValidation.Option option1 = InputValidation.ValidateQuantity(Console.ReadLine());
+                var option1 = InputValidation.ValidateQuantity(Console.ReadLine());
                 if (option1.Value == null)
                 {
                     Console.WriteLine("Please use arabic numerals only.");
@@ -292,7 +293,9 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 break;
             }
             Console.WriteLine();
-
+            
+            // Collect the various steps from the users. Loop that runs according to how many steps were entered in 
+            // earlier
             for (var i = 0; i < numSteps; i++)
             {
                 while (true)

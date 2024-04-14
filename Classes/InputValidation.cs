@@ -1,6 +1,6 @@
 namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
 {
-    public class InputValidation
+    public static class InputValidation
     {
         /// <summary>
         /// This is the option struct. It contains two values and is the type always returned from
@@ -22,7 +22,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         public static Option ValidateMainMenu(string input)
         {
-            Option option = new Option();
+            var option = new Option();
             if (input != null)
             {
                 option.Value = input.Trim();
@@ -45,7 +45,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         public static Option ValidateChangeRecipeMenu(string input)
         {
-            Option option = new Option();
+            var option = new Option();
             if (input != null)
             {
                 option.Value = input.Trim();
@@ -69,21 +69,19 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateScalingFactor(string input)
         {
-            Option option = new Option();
-            if (input != null)
+            var option = new Option();
+            if (input == null) return option;
+            input = input.Trim();
+            try
             {
-                input = input.Trim();
-                try
-                {
-                    float.Parse(input);
-                    option.Valid = true;
-                    option.Value = input;
-                }
-                catch
-                {
-                    option.Valid = false;
-                    return option;
-                }
+                float.Parse(input);
+                option.Valid = true;
+                option.Value = input;
+            }
+            catch
+            {
+                option.Valid = false;
+                return option;
             }
             return option;
         }
@@ -98,7 +96,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateRecipeName(string input)
         {
-            Option option = new Option();
+            var option = new Option();
             if (input != null)
             {
                 option.Value = input.Trim();
@@ -122,21 +120,19 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateNumberIngredients(string input)
         {
-            Option option = new Option();
-            if (input != null)
+            var option = new Option();
+            if (input == null) return option;
+            input = input.Trim();
+            try
             {
-                input = input.Trim();
-                try
-                {
-                    int.Parse(input);
-                    option.Valid = true;
-                    option.Value = input;
-                }
-                catch
-                {
-                    option.Valid = false;
-                    return option;
-                }
+                int.Parse(input);
+                option.Valid = true;
+                option.Value = input;
+            }
+            catch
+            {
+                option.Valid = false;
+                return option;
             }
             return option;
         }
@@ -151,7 +147,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateIngredientName(string input)
         {
-            Option option = new Option();
+            var option = new Option();
             if (input != null)
             {
                 option.Value = input.Trim();
@@ -175,21 +171,19 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         internal static Option ValidateQuantity(string input)
         {
-            Option option = new Option();
-            if (input != null)
+            var option = new Option();
+            if (input == null) return option;
+            input = input.Trim();
+            try
             {
-                input = input.Trim();
-                try
-                {
-                    int.Parse(input);
-                    option.Valid = true;
-                    option.Value = input;
-                }
-                catch
-                {
-                    option.Valid = false;
-                    return option;
-                }
+                int.Parse(input);
+                option.Valid = true;
+                option.Value = input;
+            }
+            catch
+            {
+                option.Valid = false;
+                return option;
             }
             return option;
         }

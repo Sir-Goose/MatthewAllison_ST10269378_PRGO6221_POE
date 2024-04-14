@@ -17,7 +17,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
     /// https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/auto-implemented-properties
     /// https://learn.microsoft.com/en-us/dotnet/csharp/fundamentals/coding-style/coding-conventions
     /// https://github.com/ktaranov/naming-convention/blob/master/C%23%20Coding%20Standards%20and%20Naming%20Conventions.md#
-    /// 
+    /// https://github.com/dev-marko/clean-code-book
     internal static class Program
     {
         /// <summary>

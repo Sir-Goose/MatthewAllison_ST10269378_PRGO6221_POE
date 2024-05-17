@@ -25,7 +25,14 @@ Run the application to see it in action:
 
 
 ### Major Changes Made
-- 
+- User can now enter an unlimited number of recipes.
+- User can enter a name for each individual recipe.
+- List recipes is displayed alphabetically by name.
+- User can choose which recipe to display.
+- User can enter the calories and food group for each ingredient.
+- A total calorie calculation gets performed.
+- User is notified and called a fatty when calories exceed 300.
+- Unit test created for the calorie notification system.
 
 
 

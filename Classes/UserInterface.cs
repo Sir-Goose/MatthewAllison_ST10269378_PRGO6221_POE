@@ -58,7 +58,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                         CreateRecipe();
                         break;
                     case "2":
-                        DisplayRecipeList();
+                        SelectRecipe();
                         break;
                     case "3":
                         SelectRecipe();
@@ -81,7 +81,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         private void DisplayRecipeList()
         {
             Console.WriteLine("Recipe List:");
-            State.Recipes.OrderBy(recipe => recipe.Name()).ToList().ForEach(recipe =>
+            State.Recipes.OrderBy(recipe => recipe.Name()).ToList().ForEach(recipe => // display each recipe
+                                                                                        // ordered by name
             {
                 Console.WriteLine(recipe.Name());
             });

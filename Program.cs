@@ -1,4 +1,5 @@
-﻿using MatthewAllison_ST10269378_PRGO6221_POE.Classes;
+﻿using System;
+using MatthewAllison_ST10269378_PRGO6221_POE.Classes;
 
 namespace MatthewAllison_ST10269378_PRGO6221_POE
 {
@@ -8,7 +9,7 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
     /// PROG6221
     /// POE
     /// </summary>
-    
+
     /// References
     /// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/enum
     /// https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/struct
@@ -27,10 +28,24 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
         /// start method is called to begin the program.
         /// </summary>
         /// <param name="args"></param>
-        public static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var userInterface = new UserInterface();
-            userInterface.Start();
+
+            UserInterface userInterface = new UserInterface(); // create new UserInterface object 
+            userInterface.CalorieNotification += OnCalorieNotification; // Subscribe to the CalorieNotification event
+            userInterface.Start(); // start the UI
+        }
+
+        /// <summary>
+        /// Event handler for the CalorieNotification even.
+        /// Displays a warning to the user when any recipe has more than 300 calories
+        /// </summary>
+        /// <param name="recipeName"></param>
+        /// <param name="totalCalories"></param>
+        private static void OnCalorieNotification(string recipeName, int totalCalories)
+        {
+            Console.WriteLine(
+                $"Warning: The recipe '{recipeName}' exceeds 300 calories. Total calories: {totalCalories}");
         }
     }
 }

@@ -69,7 +69,12 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
         /// <returns></returns>
         public int CalculateTotalCalories()
         {
-            return Ingredients.Sum(ingredient => ingredient.Calories);
+            var totalCalories = 0;
+            foreach (var ingredient in Ingredients)
+            {
+                totalCalories += ingredient.Calories;
+            }
+            return totalCalories;
         }
 
 

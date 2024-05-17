@@ -40,13 +40,15 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             {
                 Console.WriteLine("RECIPE PROCESSING SOFTWARE");
                 Console.WriteLine();
-                Console.WriteLine("1. Create New Recipe");
-                Console.WriteLine("2. View Existing Recipe");
-                Console.WriteLine("3. Change Current Recipe");
-                Console.WriteLine("4. Exit");
+                Console.WriteLine("\x1B[32mRECIPE PROCESSING SOFTWARE\x1B[0m");
+                Console.WriteLine();
+                Console.WriteLine("\x1B[32m1. Create New Recipe\x1B[0m");
+                Console.WriteLine("\x1B[32m2. View Existing Recipe\x1B[0m");
+                Console.WriteLine("\x1B[32m3. Change Current Recipe\x1B[0m");
+                Console.WriteLine("\x1B[31m4. Exit\x1B[0m");
                 Console.WriteLine("");
-                Console.WriteLine("Enter choice: ");
-
+                Console.WriteLine("\x1B[32mEnter choice: \x1B[0m");
+                
                 string choice = Console.ReadLine(); // read user input
                 Console.WriteLine();
 

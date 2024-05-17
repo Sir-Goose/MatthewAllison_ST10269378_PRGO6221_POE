@@ -46,6 +46,8 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE
         {
             Console.WriteLine(
                 $"Warning: The recipe '{recipeName}' exceeds 300 calories. Total calories: {totalCalories}");
+            Console.WriteLine("\x1B[31m Warning: This recipe is high in calories! Consider modifying the ingredients or " +
+                              "portion sizes to make a healthier version.\x1B[0m");
         }
     }
 }

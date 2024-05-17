@@ -1,105 +1,37 @@
+using System.Collections.Generic;
+using System.Linq;
+
 namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
 {
     /// <summary>
-    /// This is the Recipe class.
-    /// It contains all the data and methods required 
-    /// to represent and perform actions on the recipes
-    /// that the user creates.
+    /// This is the recipe class. It contains all the data that needs to be kept track of for recipes.
     /// </summary>
     public class Recipe
     {
-        public Step[] Steps; // step array
-        public Ingredient[] Ingredients; // ingredient array
-
-        private string _name = ""; //recipe name
-        private int _numSteps = 0; // step count
-
-        private float _scalingFactor = 1; // current scaling factor
-
-        public void Name(string name)
-        {
-            this._name = name;
-        }
-
-        public string Name()
-        {
-            return _name;
-        }
-
-        public void Scaling_factor(float scalingFactor)
-        {
-            this._scalingFactor = scalingFactor;
-        }
-
-        public float Scaling_factor()
-        {
-            return this._scalingFactor;
-        }
-
-
-        //------------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// Helper method to make the ingredients array. Takes in a size parameter.
-        /// </summary>
-        /// <param name="num"></param>
-        public void MakeIngriedientsArray(int num)
-        {
-            Ingredients = new Ingredient[num];
-        }
-
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Helper method to make the steps array. Takes in a size parameter.
-        /// </summary>
-        /// <param name="num"></param>
-        public void MakeStepsArray(int num)
-        {
-            Steps = new Step[num];
-        }
-
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// Ingredient struct.
-        /// Contains three variables
-        /// to store the required data
-        /// along with a toString for printing 
-        /// and multiply quantity for adjusting the scale.
+        /// This is the ingredient struct. It consists of Name, Quantity, Unit, Calories and Foodgroup.
+        /// It is just a structed way to store ingredient information.
         /// </summary>
         public struct Ingredient
         {
             public string Name { get; set; }
             public int Quantity { get; set; }
             public CookingMeasurement Unit { get; set; }
-
-            public void MultiplyQuantity(int factor)
-            {
-                Quantity *= factor;
-            }
-
-            /// <summary>
-            /// Method to format the ingredient information for printing to console.
-            /// </summary>
-            /// <param name="scalingFactor"></param>
-            /// <returns></returns>
-            public string ToString(float scalingFactor)
-            {
-                var output = "";
-                output += Quantity * scalingFactor;
-                output += " ";
-                output += Unit;
-                output += "of ";
-                output += " ";
-                output += Name;
-                output += ".";
-
-                return output;
-            }
+            public int Calories { get; set; }
+            public string FoodGroup { get; set; }
         }
-        //------------------------------------------------------------------------------------------------------------//
-
         /// <summary>
-        /// A cooking measurement enum to ensure that only real and sensible
-        /// measurement units are used.
+        /// Step struct. Contains position and description information that makes up each step in
+        /// a recipe.
+        /// </summary>
+        public struct Step
+        {
+            public int Position { get; set; }
+            public string Description { get; set; }
+        }
+        /// <summary>
+        /// Cooking measurement enums to ensure only sensible real measurement units
+        /// are used by the user.
         /// </summary>
         public enum CookingMeasurement
         {
@@ -117,38 +49,30 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
             Pound
         }
 
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// The Step struct.
-        /// Data structure to store all the information
-        /// required about each step of the recipe.
-        /// </summary>
-        public struct Step
+        public List<Ingredient> Ingredients = new List<Ingredient>(); // List to store the ingredients
+        public List<Step> Steps = new List<Step>(); // List to store the steps
+
+        private string name; // name of the recipe
+
+        public string Name()
         {
-            private int _position; // position of each step in the array
-            private string _description; // what to do for each step
-
-            public void Position(int pos)
-            {
-                _position = pos;
-            }
-
-            public int Position()
-            {
-                return _position;
-            }
-
-            public void Description(string description)
-            {
-                _description = description;
-            }
-
-            public string Description()
-            {
-                return _description;
-            }
+            return name;
         }
-        //------------------------------------------------------------------------------------------------------------//
+
+        public void Name(string value)
+        {
+            name = value;
+        }
+        /// <summary>
+        /// Calculate and return the total number of calories in the recipe
+        /// </summary>
+        /// <returns></returns>
+        public int CalculateTotalCalories()
+        {
+            return Ingredients.Sum(ingredient => ingredient.Calories);
+        }
+
+
     }
 }
 //----------------------------------------------END-OF-FILE-----------------------------------------------------------//

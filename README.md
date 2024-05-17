@@ -6,6 +6,20 @@
 ### Tag for Part 1
 <img width="1328" alt="Screenshot 2024-04-14 at 16 31 38" src="https://github.com/Sir-Goose/MatthewAllison_ST10269378_PRGO6221_POE/assets/66563291/f56b0509-684f-4e68-afc0-0b9bfd3b26df">
 
+### Instructions to compile and run the application
+
+#### 1. Clone the Repo
+```
+git clone https://github.com/Sir-Goose/MatthewAllison_ST10269378_PRGO6221_POE.git
+cd MatthewAllison_ST10269378_PROG6221_POE
+```
+
+### 2. Open the Solution in Visual Studio
+
+
+
+
+
 ### References
 
 + https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/enum

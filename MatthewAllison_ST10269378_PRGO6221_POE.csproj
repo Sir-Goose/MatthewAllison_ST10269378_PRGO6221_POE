@@ -42,6 +42,7 @@
     <ItemGroup>
         <Compile Include="Classes\InputValidation.cs" />
         <Compile Include="Classes\Recipe.cs" />
+        <Compile Include="Classes\State.cs" />
         <Compile Include="Classes\UserInterface.cs" />
         <Compile Include="Program.cs"/>
         <Compile Include="Properties\AssemblyInfo.cs"/>

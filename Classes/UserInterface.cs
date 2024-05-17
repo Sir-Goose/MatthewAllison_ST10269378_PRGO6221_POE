@@ -1,395 +1,239 @@
 using System;
+using System.Linq;
 using System.Net.Mail;
 using System.Runtime.ConstrainedExecution;
 
 namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
 {
     /// <summary>
-    /// This is the UserInterface class. It contains all the methods and data needed
-    /// to to make up the user interface of the program. A user can change,
-    /// view, create and delete recipes. They can also exit the program.
+    /// Delegate for the CalorieNotfication event
+    /// </summary>
+    public delegate void CalorieNotificationHandler(string recipeName, int totalCalories);
+    
+    
+    
+    /// <summary>
+    /// This is the UserInterace class. It contains all the methods related to 
+    /// user actions. Anything that prints to the console or takes in input
+    /// can be found here.
+    /// A user can create, view, change, recipes and
+    /// exit the program.
     /// </summary>
     internal class UserInterface
     {
-        private Recipe _recipe = new Recipe();
-
+        
+        public event CalorieNotificationHandler CalorieNotification; // event for calorie notification
+        
         public void Start()
         {
-            MainMenu();
+            MainMenu(); //start the main menu
         }
-        /// <summary>
-        /// This is the main menu of the program. It handles the user choosing what they would like to do.
-        /// </summary>
-        private void MainMenu()
-        {
-            while (true)
-            {
-                var choice = "0";
-                
-                PrintMainMenu(); // display the menu options
 
-                var option = InputValidation.ValidateMainMenu(Console.ReadLine());
-                if (option.Value == null) {
-                    continue;
+        //------------------------------------------------------------------------------------------------//
+        /// <summary>
+        /// This is the MainMenu method. It contains an infinite loop
+        /// with various options presented to the user.
+        /// The program always returns back here after an option is 
+        /// chosen and completed.
+        /// </summary>
+        public void MainMenu()
+        {
+            while (true) // infinite loop
+            {
+                Console.WriteLine("RECIPE PROCESSING SOFTWARE");
+                Console.WriteLine();
+                Console.WriteLine("1. Create New Recipe");
+                Console.WriteLine("2. View Existing Recipe");
+                Console.WriteLine("3. Change Current Recipe");
+                Console.WriteLine("4. Exit");
+                Console.WriteLine("");
+                Console.WriteLine("Enter choice: ");
+
+                string choice = Console.ReadLine(); // read user input
+                Console.WriteLine();
+
+                switch (choice) // switch stament to control the program
+                {
+                    case "1":
+                        CreateRecipe();
+                        break;
+                    case "2":
+                        DisplayRecipeList();
+                        break;
+                    case "3":
+                        SelectRecipe();
+                        break;
+                    case "4":
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
                 }
-                choice = option.Value;
-                Console.WriteLine();
-
-                ProcessChoice(choice);
             }
         }
+        //----------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------//
         /// <summary>
-        /// Switch case to choose what to do with user input
+        /// This is the DisplayRecipeList() method. It displays a list of all the stored recipes. It is only called
+        /// by the SelectRecipeList() method.
         /// </summary>
-        /// <param name="choice"></param>
-        private void ProcessChoice(string choice)
+        private void DisplayRecipeList()
         {
-            switch (choice)
+            Console.WriteLine("Recipe List:");
+            State.Recipes.OrderBy(recipe => recipe.Name()).ToList().ForEach(recipe =>
             {
-                case "1":
-                    CreateRecipe();
-                    break;
-                case "2":
-                    ViewRecipe();
-                    break;
-                case "3":
-                    ChangeRecipe();
-                    break;
-                case "4":
-                    DeleteRecipe();
-                    break;
-                case "5":
-                    Environment.Exit(0);
-                    break;
-                default:
-                    Console.WriteLine("Invalid Option.");
-                    break;
+                Console.WriteLine(recipe.Name());
+            });
+        }
+        /// <summary>
+        /// This is the SelectRecipe() method. It is for the user to be able to see all the recipes
+        /// and choose one to display
+        /// </summary>
+        private void SelectRecipe()
+        {
+            DisplayRecipeList();
+            Console.WriteLine("Enter the name of the recipe to display: ");
+            string recipeName = Console.ReadLine(); // read the user choice
+            Recipe selectedRecipe = State.Recipes.FirstOrDefault(recipe => recipe.Name() == recipeName);
+            if (selectedRecipe != null)
+            {
+                ViewRecipe(selectedRecipe); //view the chosen recipe
+            }
+            else
+            {
+                Console.WriteLine("Recipe not found.");
             }
         }
-
         /// <summary>
-        /// Simple method to print out the menu.
+        /// This is the ViewRecipe() method. It displays all the details of the recipe chose
+        /// by the user.
         /// </summary>
-        private void PrintMainMenu()
+        /// <param name="recipe"></param>
+        private void ViewRecipe(Recipe recipe)
         {
-            Console.WriteLine("RECIPE PROCESSING SOFTWARE");
+            Console.WriteLine($"RECIPE: {recipe.Name()}");
+            Console.WriteLine($"Number of ingredients: {recipe.Ingredients.Count}");
+            Console.WriteLine($"Number of steps: {recipe.Steps.Count}");
             Console.WriteLine();
-            Console.WriteLine("1. Create New Recipe");
-            Console.WriteLine("2. View Existing Recipe");
-            Console.WriteLine("3. Change Current Recipe");
-            Console.WriteLine("4. Delete Existing Recipe");
-            Console.WriteLine("5. Exit");
-            Console.WriteLine("");
-            Console.WriteLine("Enter choice: ");
-        }
-
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// This is the DeleteRecipe method.
-        /// It works by overwriting the existing
-        /// recipe and then informing the user.
-        /// </summary>
-        private void DeleteRecipe()
-        {
-            _recipe = new Recipe();
-            Console.WriteLine("Recipe Deleted Successfully");
-            Console.WriteLine();
-        }
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// This is the ChangeRecipe method.
-        /// It allows a user to change the scaling factor of the ingredients
-        /// in a recipe.
-        /// The scale can be changed to whatever is required by the user 
-        /// or reset back to the original value.
-        /// </summary>
-        private void ChangeRecipe()
-        {
-            Console.WriteLine("Adjusting Recipe Scale");
-            Console.WriteLine("");
-            Console.WriteLine($"Current scaling factor is: {_recipe.Scaling_factor()}");
-            Console.WriteLine();
-            PrintChangeRecipeMenu();
             
-            var option = InputValidation.ValidateChangeRecipeMenu(Console.ReadLine());
-            if (option.Value == null)
-            {
-                Console.WriteLine("Pleas enter either 1 or 2.");
-                Console.WriteLine();
-                ChangeRecipe();
-            }
-            var choice = option.Value;
-            
-            Console.WriteLine();
-            ProcessRecipeChoice(choice);
-            Console.WriteLine();
-        }
-
-        private void ProcessRecipeChoice(string choice)
-        {
-            switch (choice)
-            {
-                case "1":
-                    Console.WriteLine("Enter new scaling factor in arabic numerals: ");
-                    var option1 = InputValidation.ValidateScalingFactor(Console.ReadLine());
-                    if (option1.Value == null)
-                    {
-                        Console.WriteLine("Please enter an arabic numeral");
-                        Console.WriteLine("Scaling factor reset to: 1.");
-                        _recipe.Scaling_factor(1);
-                    }
-                    else
-                    {
-                        _recipe.Scaling_factor(float.Parse(option1.Value));
-                        Console.WriteLine($"Scaling factor adjusted to: {_recipe.Scaling_factor()}");
-                    }
-                    break;
-                case "2":
-                    Console.WriteLine("Scaling factor reset to: 1");
-                    _recipe.Scaling_factor(1);
-                    break;
-            }
-        }
-
-        private void PrintChangeRecipeMenu()
-        {
-            Console.WriteLine("1. Adjust scale");
-            Console.WriteLine("2. Reset scale");
-            Console.WriteLine("Enter choice: ");
-        }
-
-        //------------------------------------------------------------------------------------------------------------//
-        /// <summary>
-        /// This is the ViewRecipe method. It prints out the current recipe in a
-        /// neat and easy to read format.
-        /// </summary>
-        private void ViewRecipe()
-        {
-            Console.WriteLine($"RECIPE: {_recipe.Name()}");
-            Console.WriteLine($"Number of ingredients: {_recipe.Ingredients.Length}");
-            Console.WriteLine($"Number of steps: {_recipe.Steps.Length}");
-            Console.WriteLine();
             Console.WriteLine("LIST OF INGREDIENTS: ");
-
-            for ( var i = 0; i < _recipe.Ingredients.Length; i++ )
+            foreach (var ingredient in recipe.Ingredients)
             {
-                Console.Write($"{i + 1}. ");
-                Console.WriteLine(_recipe.Ingredients[i].ToString(_recipe.Scaling_factor()));
+                Console.WriteLine($"{ingredient.Name} - {ingredient.Quantity} {ingredient.Unit} - {ingredient.Calories} calories - {ingredient.FoodGroup}");
             }
             Console.WriteLine();
-
-            Console.WriteLine("LIST OF STEPS: ");
-            for ( var i = 0; i < _recipe.Steps.Length; i++ )
-            {
-                Console.Write($"{i + 1}. ");
-                Console.WriteLine(_recipe.Steps[i].Description());
-            }
             
+            Console.WriteLine("LIST OF STEPS:");
+            foreach (var step in recipe.Steps)
+            {
+                Console.WriteLine($"{step.Position}. {step.Description}");
+            }
             Console.WriteLine();
+
+            int totalCalories = recipe.CalculateTotalCalories();
+            Console.WriteLine($"Total Calories: {totalCalories}");
+            Console.WriteLine();
+            
             Console.WriteLine("END OF RECIPE.");
             Console.WriteLine();
             Console.WriteLine("Press any key to continue.");
             Console.ReadKey();
             Console.WriteLine();
         }
-        //------------------------------------------------------------------------------------------------------------//
+        //--------------------------------------------------------------------------------------------------------------//
         /// <summary>
-        /// This is the CreateRecipe and associated set of method. Largest in the class. It is
-        /// every step required to capture the details of the recipe.
-        /// There is robust input validation and value checking to 
-        /// prevent a user from having to start from scratch if they 
-        /// make a typo.
+        /// This is the CreateRecipe method. The meat of the class.
+        /// It goes through every step required to capture the details of the recipe
+        /// and checks whether a newly created recipe has exceeded 300 calories.
         /// </summary>
         private void CreateRecipe()
         {
+            Recipe recipe = new Recipe(); // create new recipe object
+            
             Console.WriteLine("Enter recipe name: ");
-            var option = InputValidation.ValidateRecipeName(Console.ReadLine());
-            if (option.Value == null)
-            {
-                CreateRecipe();
-            }
-            else
-            {
-                _recipe.Name(option.Value);
-            }
+            recipe.Name(Console.ReadLine()); // get the name from the user
             Console.WriteLine();
             
-            int numIngredients = GetNumberOfIngredients();
-            _recipe.MakeIngriedientsArray(numIngredients);
+            Console.WriteLine("Enter number of ingredients: ");
+            int numIngredients = int.Parse(Console.ReadLine()); // read the number of ingredients from the user
             Console.WriteLine();
 
-            CaptureIngredients();
-
-            Console.WriteLine("Thank you, all ingredients captured");
-            Console.WriteLine();
-
-            int numSteps = GetNumberOfSteps();
-            Console.WriteLine();
-            
-            CaptureSteps(numSteps);
-
-            Console.WriteLine("Thank you. Recipe has been captured");
-            Console.WriteLine();
-        }
-        /// <summary>
-        /// Fetch a validate the ingredient count from the user.
-        /// </summary>
-        /// <returns></returns>
-        private int GetNumberOfIngredients()
-        {
-            while (true)
-            {
-                Console.WriteLine("Enter number of ingredients: ");
-                var option = InputValidation.ValidateNumberIngredients(Console.ReadLine());
-                if (option.Value == null)
-                {
-                    continue;
-                }
-                else
-                {
-                    return int.Parse(option.Value);
-                }
-            }
-        }
-        /// <summary>
-        /// Fetch the actual ingrdients from the user
-        /// </summary>
-        private void CaptureIngredients()
-        {
-            for (var i = 0; i < _recipe.Ingredients.Length; i++)
+            for (int i = 0; i < numIngredients; ++i)
             {
                 Console.WriteLine($"Ingredient {i + 1}:");
-                CaptureIngredientName(i);
-                Console.WriteLine();
-
-                DisplayMeasurementUnits();
-                CaptureIngredientUnit(i);
-                Console.WriteLine();
-
-                CaptureIngredientQuantity(i);
-                Console.WriteLine();
-            }
-        }
-        /// <summary>
-        /// Fetch the ingredient names
-        /// </summary>
-        /// <param name="index"></param>
-        private void CaptureIngredientName(int index)
-        {
-            while (true)
-            {
+                
                 Console.WriteLine("Enter ingredient name: ");
-                var option = InputValidation.ValidateIngredientName(Console.ReadLine());
-                if (option.Value == null)
+                string name = Console.ReadLine(); // read the ingredient name
+                Console.WriteLine();
+                
+                Console.WriteLine("MEASUREMENT UNITS: ");
+                Console.WriteLine("-------------------");
+                // display each cooking measurement unit for the user to choose from
+                foreach (Recipe.CookingMeasurement measurement in Enum.GetValues(typeof(Recipe.CookingMeasurement)))
                 {
-                    continue;
+                    Console.WriteLine(measurement);
                 }
-                _recipe.Ingredients[index].Name = option.Value;
-                break;
-            }
-        }
-        /// <summary>
-        /// Display the list of measurement units
-        /// </summary>
-        private void DisplayMeasurementUnits()
-        {
-            Console.WriteLine("MEASUREMENT UNITS: ");
-            Console.WriteLine("-------------------");
-            foreach (Recipe.CookingMeasurement measurement in Enum.GetValues(typeof(Recipe.CookingMeasurement)))
-            {
-                Console.WriteLine(measurement);
-            }
-            Console.WriteLine("-------------------");
-        }
-        /// <summary>
-        /// Get the unit chosen by the user and validate it
-        /// </summary>
-        /// <param name="index"></param>
-        private void CaptureIngredientUnit(int index)
-        {
-            while (true)
-            {
+                Console.WriteLine("-------------------");
+                
                 Console.WriteLine("Enter one of the above: ");
-                var input = Console.ReadLine();
-                if (input == null)
-                {
-                    continue;
-                }
-
-                if (Enum.TryParse<Recipe.CookingMeasurement>(input, true, out var unit))
-                {
-                    _recipe.Ingredients[index].Unit = unit;
-                    break;
-                }
-                else
-                {
-                    Console.WriteLine("Please choose a valid option");
-                    continue;
-                }
-            }
-        }
-        /// <summary>
-        /// Get the quanity of each ingredient
-        /// </summary>
-        /// <param name="index"></param>
-        private void CaptureIngredientQuantity(int index)
-        {
-            while (true)
-            {
+                Recipe.CookingMeasurement unit = (Recipe.CookingMeasurement)Enum.Parse(typeof(Recipe.CookingMeasurement), Console.ReadLine(), true);
+                Console.WriteLine();
+                
                 Console.WriteLine("Enter quantity: ");
-                var option = InputValidation.ValidateQuantity(Console.ReadLine());
-                if (option.Value == null)
+                int quantity = int.Parse(Console.ReadLine()); // read the ingredient quantity
+                Console.WriteLine();
+                
+                Console.WriteLine("Enter calories: ");
+                int calories = int.Parse(Console.ReadLine()); // read the amount of calories
+                Console.WriteLine();
+                
+                Console.WriteLine("Enter food group: ");
+                string foodGroup = Console.ReadLine(); // read the food group
+                Console.WriteLine();
+                
+                // Create the ingredient struct using all the provided information
+                Recipe.Ingredient ingredient = new Recipe.Ingredient()
                 {
-                    Console.WriteLine("Please use arabic numerals only.");
-                    continue;
-                }
-                _recipe.Ingredients[index].Quantity = int.Parse(option.Value);
-                break;
+                    Name = name,
+                    Unit = unit,
+                    Quantity = quantity,
+                    Calories = calories,
+                    FoodGroup = foodGroup
+                };
+                
+                recipe.Ingredients.Add(ingredient); // finally add the ingredient to the recipe 
             }
-        }
-        /// <summary>
-        /// Get the number of steps from the user
-        /// </summary>
-        /// <returns></returns>
-        private int GetNumberOfSteps()
-        {
-            while (true)
+            Console.WriteLine("Enter number of steps: ");
+            int numSteps = int.Parse(Console.ReadLine()); // read the number of steps
+            Console.WriteLine();
+
+            for (int i = 0; i  < numSteps; i++)
             {
-                Console.WriteLine("Enter number of steps: ");
-                var option = InputValidation.ValidateQuantity(Console.ReadLine());
-                if (option.Value == null)
+                Console.WriteLine($"Step {i + 1}:");
+                string description = Console.ReadLine(); // read the actual instructions for the step
+                Console.WriteLine();
+                
+                // create the step object with the provided information
+                Recipe.Step step = new Recipe.Step
                 {
-                    Console.WriteLine("Please use arabic numerals only.");
-                    continue;
-                }
-                int numSteps = int.Parse(option.Value);
-                _recipe.MakeStepsArray(numSteps);
-                return numSteps;
+                    Position = i + 1,
+                    Description = description
+                };
+                
+                recipe.Steps.Add(step); // finally add the step to the recipe
+                
             }
-        }
-        /// <summary>
-        /// Get the details of each step and make sure details are actually provided
-        /// </summary>
-        /// <param name="numSteps"></param>
-        private void CaptureSteps(int numSteps)
-        {
-            for (var i = 0; i < numSteps; i++)
+
+            int totalCalories = recipe.CalculateTotalCalories();
+            if (totalCalories > 300)
             {
-                while (true)
-                {
-                    Console.WriteLine($"Please enter step {i + 1}");
-                    var step = new Recipe.Step();
-                    step.Position(i);
-                    step.Description(Console.ReadLine());
-                    if (step.Description() == null)
-                    {
-                        continue;
-                    }
-                    Console.WriteLine();
-                    _recipe.Steps[i] = step;
-                    break;
-                }
+                CalorieNotification?.Invoke(recipe.Name(), totalCalories); // raise the CalorieNotification event
+                                                                            // if the calorie count exceeds 300
             }
+            
+            State.Recipes.Add(recipe); // Add the recipe to the list of recipes
+            Console.WriteLine("Recipe created successfully!");
         }
     }
 }

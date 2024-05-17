@@ -189,7 +189,14 @@ namespace MatthewAllison_ST10269378_PRGO6221_POE.Classes
                 int calories = int.Parse(Console.ReadLine()); // read the amount of calories
                 Console.WriteLine();
                 
-                Console.WriteLine("Enter food group: ");
+                Console.WriteLine("Please enter the name of one of the food groups below: ");
+                Console.WriteLine();
+                Console.WriteLine("Fruits");
+                Console.WriteLine("Vegetables");
+                Console.WriteLine("Protein");
+                Console.WriteLine("Dairy");
+                Console.WriteLine("Grains");
+                Console.WriteLine("Healthy Fats");
                 string foodGroup = Console.ReadLine(); // read the food group
                 Console.WriteLine();
                 
